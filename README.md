@@ -2,7 +2,7 @@
 
 This is the Aironet Bot, developed and maintained by Jordan Hobday johobday@cisco.com
 
-This bot controls and monitors various sensors attached to a 3800 AP in the Cisco Green Park Lab.
+This bot controls and monitors various sensors connected to a 3800 AP via the developer board in the Cisco Green Park Lab.
 Use it to control the LED on the AP, take temperature readings, directly SSH to the Raspberry Pi on the developer
 board etc.
 
@@ -10,7 +10,7 @@ Please reach out if you need any help or assistance.
 
 Implementation:
 
-The code is run using Node JS and BotKit. So these will both need installing first (recoommend the latest versions of both). We also used NGROK such that we can host the bot locally rather than using AWS or the like, however this is your choice whether you wish to use this.
+The code is run using Node JS and BotKit. So these will both need installing first (recommend the latest versions of both). We also use NGROK such that we can host the bot locally rather than using AWS or the like, however this is your choice whether you wish to use this.
 
 https://github.com/howdyai/botkit-starter-ciscospark
 
