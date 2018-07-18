@@ -14,8 +14,8 @@ var Botkit = require('./lib/Botkit.js');
 var controller = Botkit.sparkbot({
     debug: false,
     log: false,
-    public_address:  "https://d52931de.ngrok.io",
-    ciscospark_access_token: "MDI5OGI5MGQtYjgwOS00MzIyLTgxYzEtM2RjNmJmNTExMmViYjIxODg2ZjktMWQ2",
+    public_address:  "***********", //NGROK Pulbic Address for testing
+    ciscospark_access_token: "************", //Spark Access Token for Bot
     studio_token: process.env.studio_token, // get one from studio.botkit.ai to enable content management, stats, message console and more
     secret: process.env.secret, // this is an RECOMMENDED but optional setting that enables validation of incoming webhooks
     webhook_name: 'Cisco Spark bot created with Botkit, override me before going to production',
@@ -58,7 +58,7 @@ controller.on('direct_message', function(bot, message) {
     var ssh = new SSH({
         host: '10.52.79.214',
         user: 'pi',
-        pass: 'Mobilityr0ck$'
+        pass: '************' //Insert Password
     });
 
     //Check if we need to send an SSH Command
