@@ -88,7 +88,6 @@ controller.on('direct_message', function(bot, message) {
             + "*ResetLED*   | If the LED is flashing this script will Stop it.       \n"
             + "*ShowTemp*   |   Displays the current temperature of the sensor at the AP.       \n"
             + "*ShowHumidity*   |   Displays the current humidity of the sensor at the AP.      \n"
-            + "*ShowHumidity*   |   Displays the current humidity of the sensor at the AP.      \n"
             + "*LightsOn*    |   Runs the script that switches the light in the lab on.       \n"
             + "*LightsOff*    |  Runs the script that switches the light in the lab off.       \n"
             + "*StopSSH* |   Terminates the SSH Session if there is one running.       \n"
