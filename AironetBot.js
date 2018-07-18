@@ -71,6 +71,7 @@ controller.on('direct_message', function(bot, message) {
                 convo.say("Hi there!");
                 convo.say("I'm Aironet Bot.");
                 convo.say({text: "I was developed by Jordan Hobday (johobday@cisco.com) as part of the Aironet Developer Program.", delay: 2000});
+                convo.say({text: "The code is maintained on Jordan's GitHub at: https://github.com/zippidezap/Aironet-Bot.", delay: 2000});
                 convo.say({text: "I'm directly connected to a lab in the Cisco Green Park offices where there is a 3800 AP with the developer module attached. Connected to this is a raspberry pie where I can run scripts to interact with the AP!", delay: 4500});
                 convo.say({text: "To get started try typing *Command List*, to see what you can ask me to do! Give it a go!", delay: 4500});
                 return;
@@ -90,6 +91,7 @@ controller.on('direct_message', function(bot, message) {
             + "*ShowHumidity*   |   Displays the current humidity of the sensor at the AP.      \n"
             + "*LightsOn*    |   Runs the script that switches the light in the lab on.       \n"
             + "*LightsOff*    |  Runs the script that switches the light in the lab off.       \n"
+            + "*SSH* |   Enables an SSH session directly to the Raspberry Pi.       \n"
             + "*StopSSH* |   Terminates the SSH Session if there is one running.       \n"
             + "*Help*   |   Displays The About Me info for the Bot.       \n\n"
             + "Please not that all commands are Case Sensitive!\n");
