@@ -171,6 +171,7 @@ controller.on('direct_message', function(bot, message) {
             case "LightsOn":
 
                 //Run the script
+                ssh.exec("cd /home/pi");
                 ssh.exec("./LightsOn.sh").start();
 
                 console.log("Lights On");
@@ -180,6 +181,7 @@ controller.on('direct_message', function(bot, message) {
             case "LightsOff":
 
                 //Run the script
+                ssh.exec("cd /home/pi");
                 ssh.exec("./LightsOff.sh").start();
 
                 console.log("Lights Off");
