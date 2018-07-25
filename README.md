@@ -28,7 +28,7 @@ Change 'public_address' line 17: to the web address the bot will be hosted on, s
 
 Change 'ciscospark_access_token' line 18: to the Access Token of the bot you have made to tie to the two together.
 
-Change 'pass:' line 61: To the SSH password on the Raspberry Pi within the lab. Reach out to me for access if needed.
+Change The SSH connection details to your Raspberry Pi on attached to the Developer Board lines 61-63: Change to the IP, User and Password for your Raspberry Pi
 
 Once you have installed the relevant files and changed the variables, navigate to your relevant directory in the command line. Then execute the main application by executing
 
