@@ -14,7 +14,7 @@ var Botkit = require('./lib/Botkit.js');
 var controller = Botkit.sparkbot({
     debug: false,
     log: false,
-    public_address:  "***********", //NGROK Pulbic Address for testing
+    public_address:  "*************", //NGROK Pulbic Address for testing
     ciscospark_access_token: "************", //Spark Access Token for Bot
     studio_token: process.env.studio_token, // get one from studio.botkit.ai to enable content management, stats, message console and more
     secret: process.env.secret, // this is an RECOMMENDED but optional setting that enables validation of incoming webhooks
@@ -26,6 +26,8 @@ var bot = controller.spawn({});
 var http = require("https");
 var sshEnabled = false;
 var sshReturn;
+var blinking = false;
+var lightsOn = true;
 
 //Define BotKit to listen on port 3000 on a local machine
 controller.setupWebserver(process.env.PORT || 3000, function(err, webserver) {
@@ -56,9 +58,9 @@ controller.on('direct_message', function(bot, message) {
     //PROBABLY MASSIVELY INEFFICIENT ON MEMORY AND CONNECTIONS :/
     var SSH = require('simple-ssh');
     var ssh = new SSH({
-        host: '10.52.79.214',
-        user: 'pi',
-        pass: '************' //Insert Password
+        host: '************',
+        user: '************',
+        pass: '************'
     });
 
     //Check if we need to send an SSH Command
@@ -139,54 +141,74 @@ controller.on('direct_message', function(bot, message) {
 
             case "BlinkLED":
 
-                //Run the script
-                ssh.exec("cd /home/cisco");
-                ssh.exec("python ap-led-blink.py", {
-                    out: function(stdout){
-                        setTimeout(function() {
-                            assignLog(stdout);
-                        }, 1500)
-                    }
-                }).start();
+                if(!blinking){ //Check to make sure the LED is not already blinking.
+                    //Run the script
+                    ssh.exec("cd /home/cisco");
+                    ssh.exec("python ap-led-blink.py", {
+                        out: function(stdout){
+                            setTimeout(function() {
+                                assignLog(stdout);
+                            }, 1500)
+                        }
+                    }).start();
 
-                console.log("Blinking!");
-                reply("No problem, let me send the commands to the raspberry Pi! Sit tight and I'll let you know when I have.");
+                    console.log("Blinking!");
+                    reply("No problem, let me send the commands to the raspberry Pi! Sit tight and I'll let you know when I have.");
+                    blinking = true;
+                } else {
+                    reply("The LED is actually blinking right now, so there is no need to run this again! To Stop blinking it type: *ResetLED*.");
+                }
             break;
 
             case "ResetLED":
 
-                //Run the script
-                ssh.exec("cd /home/cisco");
-                ssh.exec("python ap-led-on.py", {
-                    out: function(stdout){
-                        setTimeout(function() {
-                            assignLog(stdout);
-                        }, 1500)
-                    }
-                }).start();
+                if(blinking){ //Check to make sure the LED is already blinking.
+                    //Run the script
+                    ssh.exec("cd /home/cisco");
+                    ssh.exec("python ap-led-on.py", {
+                        out: function(stdout){
+                            setTimeout(function() {
+                                assignLog(stdout);
+                            }, 1500)
+                        }
+                    }).start();
 
-                console.log("Stop Blinking!");
-                reply("No problem, let me send the commands to the raspberry Pi! Sit tight and I'll let you know when I have.");
+                    console.log("Stop Blinking!");
+                    reply("No problem, let me send the commands to the raspberry Pi! Sit tight and I'll let you know when I have.");
+                    blinking = false;
+                } else {
+                    reply("The LED isn't actually blinking right now, so there is no need to reset it! To Start blinking it type: *BlinkLED*.");
+                }
             break;
 
             case "LightsOn":
 
-                //Run the script
-                ssh.exec("cd /home/pi");
-                ssh.exec("./LightsOn.sh").start();
+                if(!lightsOn){ //Check to make sure the lights are off.
+                    //Run the script
+                    ssh.exec("cd /home/pi");
+                    ssh.exec("./LightsOn.sh").start();
 
-                console.log("Lights On");
-                reply("Let me hit the lights for you!");
+                    console.log("Lights On");
+                    reply("Let me hit the lights for you!");
+                    lightsOn = true;
+                } else {
+                    reply("The lights are actually already on, so there is no need to run this again! To turn them off type: *LightsOff*.");
+                }
             break;
 
             case "LightsOff":
 
-                //Run the script
-                ssh.exec("cd /home/pi");
-                ssh.exec("./LightsOff.sh").start();
+                if(lightsOn){ //Check to make sure the lights are off.
+                    //Run the script
+                    ssh.exec("cd /home/pi");
+                    ssh.exec("./LightsOff.sh").start();
 
-                console.log("Lights Off");
-                reply("Just turning off the lights now.");
+                    console.log("Lights Off");
+                    reply("Just turning off the lights now.");
+                    lightsOn = false;
+                } else {
+                    reply("The lights are actually already off, so there is no need to run this again! To turn them on type: *LightsOn*.");
+                }
             break;
 
             case "SSH":
@@ -240,7 +262,19 @@ controller.on('direct_message', function(bot, message) {
             ssh.exec(message.text, {
                 out: function(stdout){
                     setTimeout(function() {
-                        assignLog(stdout);
+
+                        var outputToArray = stdout.split("\n"); //Break apart the input stream
+                        var stringBuilder = "```"; //Fomatting in Webex Teams
+
+                        for(var i = 0; i < outputToArray.length; i++) { //Iterate over the console return to help with formatting in Webex Teams
+
+                            stringBuilder = stringBuilder.concat(outputToArray[i] + "\n\n");
+
+                        }
+
+                        stringBuilder = stringBuilder.concat("```"); //Fomatting in Webex Teams
+                        assignLog(stringBuilder); //Push The Output to the Bot
+
                     }, 1500)
                 }
             }).start();
@@ -254,7 +288,7 @@ controller.on('direct_message', function(bot, message) {
     //Bot reply function
     function reply(speech) {
 
-        bot.reply(message, speech);
+        bot.reply(message, {text: speech});
 
     }
 
