@@ -264,7 +264,7 @@ controller.on('direct_message', function(bot, message) {
                     setTimeout(function() {
 
                         var outputToArray = stdout.split("\n"); //Break apart the input stream
-                        var stringBuilder = "```"; //Fomatting in Webex Teams
+                        var stringBuilder = "```\n\n"; //Fomatting in Webex Teams
 
                         for(var i = 0; i < outputToArray.length; i++) { //Iterate over the console return to help with formatting in Webex Teams
 
