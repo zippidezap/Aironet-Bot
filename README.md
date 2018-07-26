@@ -8,6 +8,8 @@ board etc.
 
 Please reach out if you need any help or assistance.
 
+To see a demo of this bot please check out the video link here: https://cisco.box.com/s/bsqibc3x65pn7dsvdkfff0w3uqoa0zzq
+
 Implementation:
 
 The code is run using Node JS and BotKit. So these will both need installing first (recommend the latest versions of both). We also use NGROK such that we can host the bot locally rather than using AWS or the like, however this is your choice whether you wish to use this.
