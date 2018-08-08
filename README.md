@@ -8,7 +8,7 @@ board etc.
 
 Please reach out if you need any help or assistance.
 
-To see a demo of this bot please check out the video link here: youtu.be/Z2S06CpOErM
+To see a demo of this bot please check out the video link here: https://youtu.be/Z2S06CpOErM
 
 Implementation:
 
